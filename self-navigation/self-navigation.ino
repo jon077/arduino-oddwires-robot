@@ -53,7 +53,7 @@ void setup() {
 void loop(){
 
   //look forward
-  robot.look(90,100);
+  robot.look(robot.FORWARD,100);
 
   //Measure distance
   long inches = robot.calculate_inches();
@@ -65,16 +65,16 @@ void loop(){
     robot.motor_stop();
 
     //turn head left and calculate distance
-    robot.look(0, 1500);
+    robot.look(robot.LEFT, 1500);
     long left_inches = robot.calculate_inches();
     Serial.println("left_inches: " + left_inches);
 
 
-    robot.look(180, 1500);
+    robot.look(robot.RIGHT, 1500);
     long right_inches = robot.calculate_inches();
     Serial.println("right_inches: " + right_inches);
 
-    robot.look(90, 1000);
+    robot.look(robot.FORWARD, 1000);
     if(right_inches < left_inches){
         robot.turn_left(500);
     }else{

@@ -17,6 +17,10 @@ public:
   void setup();
   void look(int pos, int milliseconds);
 
+  int FORWARD;
+  int LEFT;
+  int RIGHT;
+
 private:
   int* _motor_left;
   int* _motor_right;

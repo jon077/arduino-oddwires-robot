@@ -4,6 +4,7 @@
 
 
 
+
 /*************
 * Commands to make creating sketches with the robot easier
 *
@@ -18,6 +19,11 @@ Robot::Robot(int* motor_left, int* motor_right, int trigger_pin, int echo_pin, i
   _echo_pin = echo_pin;
   _servo_pin = servo_pin;
   _servo = servo;
+
+  LEFT = 0;
+  FORWARD = 90;
+  RIGHT = 180;
+
 }
 
 
