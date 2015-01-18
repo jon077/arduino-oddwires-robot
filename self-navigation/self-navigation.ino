@@ -76,7 +76,7 @@ void loop(){
   if(inches > 12){
     robot.drive_forward(100);
   }else{
-    motor_stop();
+    robot.motor_stop();
 
     //turn head left and calculate distance
     servo.write(0);    delay(1500);
@@ -90,9 +90,9 @@ void loop(){
 
     servo.write(90);  delay(1000);
     if(right_inches < left_inches){
-        turn_left(500);
+        robot.turn_left(500);
     }else{
-        turn_right(500);
+        robot.turn_right(500);
     }
   }
 }
@@ -100,50 +100,6 @@ void loop(){
 
 
 // --------------------------------------------------------------------------- Drive
-
-
-void motor_stop(){
-  digitalWrite(MOTOR_LEFT[0], LOW);
-  digitalWrite(MOTOR_LEFT[1], LOW);
-
-  digitalWrite(MOTOR_RIGHT[0], LOW);
-  digitalWrite(MOTOR_RIGHT[1], LOW);
-  delay(25);
-}
-
-
-
-void drive_backward(int seconds){
-  digitalWrite(MOTOR_LEFT[0], LOW);
-  digitalWrite(MOTOR_LEFT[1], HIGH);
-
-  digitalWrite(MOTOR_RIGHT[0], LOW);
-  digitalWrite(MOTOR_RIGHT[1], HIGH);
-  delay(seconds);
-}
-
-
-void turn_left(int seconds){
-  digitalWrite(MOTOR_LEFT[0], LOW);
-  digitalWrite(MOTOR_LEFT[1], HIGH);
-
-  digitalWrite(MOTOR_RIGHT[0], HIGH);
-  digitalWrite(MOTOR_RIGHT[1], LOW);
-  delay(seconds);
-}
-
-
-void turn_right(int seconds){
-  digitalWrite(MOTOR_LEFT[0], HIGH);
-  digitalWrite(MOTOR_LEFT[1], LOW);
-
-  digitalWrite(MOTOR_RIGHT[0], LOW);
-  digitalWrite(MOTOR_RIGHT[1], HIGH);
-
-  delay(seconds);
-}
-
-
 
 
 long calculate_inches(){
