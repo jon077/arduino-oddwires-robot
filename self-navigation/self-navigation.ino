@@ -28,14 +28,14 @@ const int SERVO_PIN = 5;
 
 // --------------------------------------------------------------------------- Ultrasonic sensor
 
-const int TRIGGER_PIN = 4;
-const int ECHO_PIN = 2;
+int TRIGGER_PIN = 4;
+int ECHO_PIN = 2;
 
 
 
 Servo servo; // create servo object to control a servo.  a maximum of eight servo objects can be created
 
-Robot robot(MOTOR_LEFT, MOTOR_RIGHT);
+Robot robot(MOTOR_LEFT, MOTOR_RIGHT, TRIGGER_PIN, ECHO_PIN);
 
 
 // --------------------------------------------------------------------------- Setup
@@ -70,7 +70,7 @@ void loop(){
   servo.write(90);
 
   //Measure distance
-  long inches = calculate_inches();
+  long inches = robot.calculate_inches();
   Serial.println(" - inches: " + inches );
 
   if(inches > 12){
@@ -80,12 +80,12 @@ void loop(){
 
     //turn head left and calculate distance
     servo.write(0);    delay(1500);
-    long left_inches = calculate_inches();
+    long left_inches = robot.calculate_inches();
     Serial.println("left_inches: " + left_inches);
 
 
     servo.write(180);  delay(1500);
-    long right_inches = calculate_inches();
+    long right_inches = robot.calculate_inches();
     Serial.println("right_inches: " + right_inches);
 
     servo.write(90);  delay(1000);
@@ -99,19 +99,3 @@ void loop(){
 
 
 
-// --------------------------------------------------------------------------- Drive
-
-
-long calculate_inches(){
-  //write to the trigger
-  digitalWrite(TRIGGER_PIN, LOW);
-  delayMicroseconds(2);
-  digitalWrite(TRIGGER_PIN, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(TRIGGER_PIN, LOW);
-
-  //read duration
-  long time = pulseIn(ECHO_PIN, HIGH);
-
-  return time / 74 / 2;
-}
