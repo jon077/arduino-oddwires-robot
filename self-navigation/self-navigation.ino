@@ -24,7 +24,7 @@ int MOTOR_RIGHT[] = {7, 6};
 
 // --------------------------------------------------------------------------- Servo
 
-const int SERVO_PIN = 5;
+int SERVO_PIN = 5;
 
 // --------------------------------------------------------------------------- Ultrasonic sensor
 
@@ -35,7 +35,7 @@ int ECHO_PIN = 2;
 
 Servo servo; // create servo object to control a servo.  a maximum of eight servo objects can be created
 
-Robot robot(MOTOR_LEFT, MOTOR_RIGHT, TRIGGER_PIN, ECHO_PIN);
+Robot robot(MOTOR_LEFT, MOTOR_RIGHT, TRIGGER_PIN, ECHO_PIN, SERVO_PIN, servo);
 
 
 // --------------------------------------------------------------------------- Setup
@@ -44,22 +44,8 @@ void setup() {
 
   Serial.begin(9600);
 
-  // Setup motors
-  int i;
-  for(i = 0; i < 2; i++){
-    pinMode(MOTOR_LEFT[i], OUTPUT);
-    pinMode(MOTOR_RIGHT[i], OUTPUT);
-  }
-
-  //Setup servo
-  servo.attach(SERVO_PIN); // attaches the servo on pin 9 to the servo object
-
-
-  //Setup ultrasonic sensor
-  pinMode(TRIGGER_PIN, OUTPUT);
-  pinMode(ECHO_PIN, INPUT);
-
-  
+  //setup robot
+  robot.setup();
 }
 
 
@@ -67,7 +53,7 @@ void setup() {
 void loop(){
 
   //look forward
-  servo.write(90);
+  robot.look(90,100);
 
   //Measure distance
   long inches = robot.calculate_inches();
@@ -79,16 +65,16 @@ void loop(){
     robot.motor_stop();
 
     //turn head left and calculate distance
-    servo.write(0);    delay(1500);
+    robot.look(0, 1500);
     long left_inches = robot.calculate_inches();
     Serial.println("left_inches: " + left_inches);
 
 
-    servo.write(180);  delay(1500);
+    robot.look(180, 1500);
     long right_inches = robot.calculate_inches();
     Serial.println("right_inches: " + right_inches);
 
-    servo.write(90);  delay(1000);
+    robot.look(90, 1000);
     if(right_inches < left_inches){
         robot.turn_left(500);
     }else{

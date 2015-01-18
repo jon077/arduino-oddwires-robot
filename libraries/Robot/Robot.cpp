@@ -1,4 +1,5 @@
 #include "Arduino.h"
+#include "Servo.h"
 #include "Robot.h"
 
 
@@ -9,12 +10,37 @@
 * NOTE:  The motor functions have a milliseconds argument.   Milliseconds is provided for convenience.
 * It may be desired to have a short delay so other commands can be called while the motor is running.
 *************/
-Robot::Robot(int* motor_left, int* motor_right, int trigger_pin, int echo_pin)
+Robot::Robot(int* motor_left, int* motor_right, int trigger_pin, int echo_pin, int servo_pin, Servo servo)
 {
   _motor_left = motor_left;
   _motor_right = motor_right;
   _trigger_pin = trigger_pin;
   _echo_pin = echo_pin;
+  _servo_pin = servo_pin;
+  _servo = servo;
+}
+
+
+/******
+* Setup components during startup.  Sets up motor, servo, and ultrasonic
+******/
+void Robot::setup(){
+
+  // Setup motors
+  int i;
+  for(i = 0; i < 2; i++){
+    pinMode(_motor_left[i], OUTPUT);
+    pinMode(_motor_right[i], OUTPUT);
+  }
+
+
+  //Setup servo
+  _servo.attach(_servo_pin); // attaches the servo on pin 9 to the servo object
+
+
+  //Setup ultrasonic sensor
+  pinMode(_trigger_pin, OUTPUT);
+  pinMode(_echo_pin, INPUT);
 }
 
 
@@ -50,13 +76,13 @@ void Robot::drive_forward(int milliseconds){
 /*****
 * Drives backward delaying for milliseconds
 ***/
-void Robot::drive_backward(int seconds){
+void Robot::drive_backward(int milliseconds){
   digitalWrite(_motor_left[0], LOW);
   digitalWrite(_motor_left[1], HIGH);
 
   digitalWrite(_motor_right[0], LOW);
   digitalWrite(_motor_right[1], HIGH);
-  delay(seconds);
+  delay(milliseconds);
 }
 
 
@@ -64,27 +90,39 @@ void Robot::drive_backward(int seconds){
 /*****
 * Turns robot left delaying for milliseconds
 ***/
-void Robot::turn_left(int seconds){
+void Robot::turn_left(int milliseconds){
   digitalWrite(_motor_left[0], LOW);
   digitalWrite(_motor_left[1], HIGH);
 
   digitalWrite(_motor_right[0], HIGH);
   digitalWrite(_motor_right[1], LOW);
-  delay(seconds);
+  delay(milliseconds);
 }
 
 /*****
 * Turns robot right delaying for milliseconds
 ***/
-void Robot::turn_right(int seconds){
+void Robot::turn_right(int milliseconds){
   digitalWrite(_motor_left[0], HIGH);
   digitalWrite(_motor_left[1], LOW);
 
   digitalWrite(_motor_right[0], LOW);
   digitalWrite(_motor_right[1], HIGH);
 
-  delay(seconds);
+  delay(milliseconds);
 }
+
+
+/*****
+* Turns to servo to look in the given position and waits the given milliseconds.
+*
+* XXX:  Need to make constants in the library for left/right/forward.
+***/
+void Robot::look(int pos, int milliseconds){
+  _servo.write(pos);
+  delay(milliseconds);
+}
+
 
 
 /*****
