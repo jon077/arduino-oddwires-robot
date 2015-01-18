@@ -7,17 +7,19 @@
 *        Turn left
 *        Measure distance
 *        Turn right
-*        Measure distance.  
+*        Measure distance.
 * 3.  Turn in the direction of the longest distance and drive forward
 *
 *************************************************/
 
 
 #include <Servo.h>
+#include <Robot.h>
+
 
 // --------------------------------------------------------------------------- Motors
-const int MOTOR_LEFT[] = {9, 8};
-const int MOTOR_RIGHT[] = {7, 6};
+int MOTOR_LEFT[] = {9, 8};
+int MOTOR_RIGHT[] = {7, 6};
 
 
 // --------------------------------------------------------------------------- Servo
@@ -33,12 +35,13 @@ const int ECHO_PIN = 2;
 
 Servo servo; // create servo object to control a servo.  a maximum of eight servo objects can be created
 
+Robot robot(MOTOR_LEFT, MOTOR_RIGHT);
 
 
 // --------------------------------------------------------------------------- Setup
 void setup() {
-  delay(2000); // delay so to allow time to upload new sketch before wheels start to turn 
-  
+  delay(2000); // delay so to allow time to upload new sketch before wheels start to turn
+
   Serial.begin(9600);
 
   // Setup motors
@@ -56,34 +59,35 @@ void setup() {
   pinMode(TRIGGER_PIN, OUTPUT);
   pinMode(ECHO_PIN, INPUT);
 
+  
 }
 
 
 
 void loop(){
-  
+
   //look forward
   servo.write(90);
-  
+
   //Measure distance
   long inches = calculate_inches();
   Serial.println(" - inches: " + inches );
-  
+
   if(inches > 12){
-    drive_forward(100);
+    robot.drive_forward(100);
   }else{
     motor_stop();
-    
+
     //turn head left and calculate distance
     servo.write(0);    delay(1500);
     long left_inches = calculate_inches();
     Serial.println("left_inches: " + left_inches);
-    
-    
+
+
     servo.write(180);  delay(1500);
     long right_inches = calculate_inches();
     Serial.println("right_inches: " + right_inches);
-    
+
     servo.write(90);  delay(1000);
     if(right_inches < left_inches){
         turn_left(500);
@@ -107,15 +111,6 @@ void motor_stop(){
   delay(25);
 }
 
-
-void drive_forward(int seconds){
-  digitalWrite(MOTOR_LEFT[0], HIGH);
-  digitalWrite(MOTOR_LEFT[1], LOW);
-
-  digitalWrite(MOTOR_RIGHT[0], HIGH);
-  digitalWrite(MOTOR_RIGHT[1], LOW);
-  delay(seconds);
-}
 
 
 void drive_backward(int seconds){
@@ -161,6 +156,6 @@ long calculate_inches(){
 
   //read duration
   long time = pulseIn(ECHO_PIN, HIGH);
-  
+
   return time / 74 / 2;
 }
