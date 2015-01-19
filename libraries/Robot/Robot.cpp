@@ -11,10 +11,12 @@
 * NOTE:  The motor functions have a milliseconds argument.   Milliseconds is provided for convenience.
 * It may be desired to have a short delay so other commands can be called while the motor is running.
 *************/
-Robot::Robot(int* motor_left, int* motor_right, Servo servo)
+Robot::Robot(int* motor_left, int* motor_right)
 {
   _motor_left = motor_left;
   _motor_right = motor_right;
+
+  Servo servo; // create servo object to control a servo.  a maximum of eight servo objects can be created
   _servo = servo;
 
   _servo_pin = 5;

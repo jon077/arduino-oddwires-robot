@@ -7,7 +7,7 @@
 class Robot
 {
 public:
-  Robot(int* motor_left, int* motor_right, Servo servo);
+  Robot(int* motor_left, int* motor_right);
   void motor_stop();
   void drive_forward(int milliseconds);
   void drive_backward(int milliseconds);
