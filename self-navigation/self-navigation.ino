@@ -22,20 +22,13 @@ int MOTOR_LEFT[] = {9, 8};
 int MOTOR_RIGHT[] = {7, 6};
 
 
-// --------------------------------------------------------------------------- Servo
-
-int SERVO_PIN = 5;
 
 // --------------------------------------------------------------------------- Ultrasonic sensor
-
-int TRIGGER_PIN = 4;
-int ECHO_PIN = 2;
-
 
 
 Servo servo; // create servo object to control a servo.  a maximum of eight servo objects can be created
 
-Robot robot(MOTOR_LEFT, MOTOR_RIGHT, TRIGGER_PIN, ECHO_PIN, SERVO_PIN, servo);
+Robot robot(MOTOR_LEFT, MOTOR_RIGHT, servo);
 
 
 // --------------------------------------------------------------------------- Setup

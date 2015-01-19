@@ -11,14 +11,15 @@
 * NOTE:  The motor functions have a milliseconds argument.   Milliseconds is provided for convenience.
 * It may be desired to have a short delay so other commands can be called while the motor is running.
 *************/
-Robot::Robot(int* motor_left, int* motor_right, int trigger_pin, int echo_pin, int servo_pin, Servo servo)
+Robot::Robot(int* motor_left, int* motor_right, Servo servo)
 {
   _motor_left = motor_left;
   _motor_right = motor_right;
-  _trigger_pin = trigger_pin;
-  _echo_pin = echo_pin;
-  _servo_pin = servo_pin;
   _servo = servo;
+
+  _servo_pin = 5;
+  _trigger_pin = 4;
+  _echo_pin = 2;
 
   LEFT = 0;
   FORWARD = 90;
