@@ -5,7 +5,7 @@ See documents/RoboticsKitV2.3.pdf for the original PDF documentation from oddwir
 
 
 ## Library
-* Robot library has the functions for interacting with the robot.  It should be used whenever possible.
+Robot library has the functions for interacting with the robot.  It should be used whenever possible.
 
 
 ## Sketches
