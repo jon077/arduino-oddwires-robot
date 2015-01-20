@@ -1,94 +1,49 @@
-// Use this code to test your motor with the Arduino board.
+// Use this code to test the robot as well as the Robot library
+// The basic smoke test just tests the motors.  No servo/ultrasonic.
 
-// If you need PWM, just use the PWM outputs on the Arduino
-// and instead of digitalWrite, you should use the analogWrite command
+#include <Servo.h>
+#include <Robot.h>
+
 
 // --------------------------------------------------------------------------- Motors
-int motor_left[] = {9, 8};
-int motor_right[] = {7, 6};
+int MOTOR_LEFT[] = {9, 8};
+int MOTOR_RIGHT[] = {7, 6};
 
-// --------------------------------------------------------------------------- Setup
+
+
+// --------------------------------------------------------------------------- Initialize Robot
+
+Robot robot(MOTOR_LEFT, MOTOR_RIGHT);
+
 void setup() {
-Serial.begin(9600);
+  Serial.begin(9600);
 
-// Setup motors
-int i;
-for(i = 0; i < 2; i++){
-pinMode(motor_left[i], OUTPUT);
-pinMode(motor_right[i], OUTPUT);
-}
+  //setup robot
+  robot.setup();
 
 }
 
 // --------------------------------------------------------------------------- Loop
 void loop() {
-Serial.println("Colin");
-drive_forward();
-delay(1000);
-motor_stop();
-Serial.println("1");
 
-drive_backward();
-delay(1000);
-motor_stop();
-Serial.println("2");
+  robot.drive_forward(1000);
+  robot.motor_stop();
+  Serial.println("1");
 
-turn_left();
-delay(1000);
-motor_stop();
-Serial.println("3");
+  robot.drive_backward(1000);
+  robot.motor_stop();
+  Serial.println("2");
 
-turn_right();
-delay(1000);
-motor_stop();
-Serial.println("4");
+  robot.turn_left(1000);
+  robot.motor_stop();
+  Serial.println("3");
 
-motor_stop();
-delay(1000);
-motor_stop();
-Serial.println("5");
+  robot.turn_right(1000);
+  robot.motor_stop();
+  Serial.println("4");
+
+  robot.motor_stop();
+  Serial.println("5");
 
 }
 
-// --------------------------------------------------------------------------- Drive
-
-void motor_stop(){
-digitalWrite(motor_left[0], LOW);
-digitalWrite(motor_left[1], LOW);
-
-digitalWrite(motor_right[0], LOW);
-digitalWrite(motor_right[1], LOW);
-delay(25);
-}
-
-void drive_forward(){
-digitalWrite(motor_left[0], HIGH);
-digitalWrite(motor_left[1], LOW);
-
-digitalWrite(motor_right[0], HIGH);
-digitalWrite(motor_right[1], LOW);
-}
-
-void drive_backward(){
-digitalWrite(motor_left[0], LOW);
-digitalWrite(motor_left[1], HIGH);
-
-digitalWrite(motor_right[0], LOW);
-digitalWrite(motor_right[1], HIGH);
-}
-
-void turn_left(){
-digitalWrite(motor_left[0], LOW);
-digitalWrite(motor_left[1], HIGH);
-
-digitalWrite(motor_right[0], HIGH);
-digitalWrite(motor_right[1], LOW);
-}
-
-void turn_right(){
-digitalWrite(motor_left[0], HIGH);
-digitalWrite(motor_left[1], LOW);
-
-digitalWrite(motor_right[0], LOW);
-digitalWrite(motor_right[1], HIGH);
-}
