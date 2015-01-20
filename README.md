@@ -22,6 +22,8 @@ measure left/right and go in the direction of the largest distance
 
 Overall, it works pretty well, but sometimes the sound bounces off of diagonal walls.  Measuring perpendicular works really well.
 
+### Follow Wall
+Follow wall is an attempt to navigate the robot along a wall using the ultrasonic sensor to feel its way down the wall.
 
 ## Next Steps
 * See the issues for next steps
