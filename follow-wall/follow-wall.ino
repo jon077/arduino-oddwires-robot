@@ -30,10 +30,7 @@ int MOTOR_RIGHT[] = {7, 6};
 
 
 
-// --------------------------------------------------------------------------- Ultrasonic sensor
-
-
-Servo servo1; // create servo object to control a servo.  a maximum of eight servo objects can be created
+// --------------------------------------------------------------------------- Initialize Robot
 
 Robot robot(MOTOR_LEFT, MOTOR_RIGHT);
 
